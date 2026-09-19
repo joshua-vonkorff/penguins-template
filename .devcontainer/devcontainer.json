@@ -1,0 +1,54 @@
+{
+  "name": "Penguins course",
+
+  // VERIFY: pick a current tag from the devcontainers/images Python page
+  // and pin it for the term.
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.12",
+
+  // Keep machines small: this stretches students' free core hours.
+  "hostRequirements": {
+    "cpus": 2
+  },
+
+  "postCreateCommand": "pip install --user -r requirements.txt",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        // VERIFY: confirm Copilot Chat appears in the test codespace.
+        // Listing it is harmless if it is already present.
+        "GitHub.copilot-chat"
+      ],
+      "settings": {
+        // Hide Autopilot from the agent picker (it is on by default).
+        "chat.autopilot.enabled": false,
+
+        // Require approval for every agent terminal command,
+        // instead of auto-running "read-only" ones.
+        "chat.tools.terminal.enableAutoApprove": false,
+
+        // Never auto-accept agent edits after a delay.
+        "chat.editing.autoAcceptDelay": 0,
+
+        // Ask before the agent edits configuration or secrets files.
+        "chat.tools.edits.autoApprove": {
+          "**/*": true,
+          "**/.devcontainer/**": false,
+          "**/.vscode/**": false,
+          "**/.env": false,
+          "**/requirements.txt": false,
+          "**/.gitignore": false
+        },
+
+        // Keep chat checkpoints on so Restore Checkpoint works.
+        "chat.checkpoints.enabled": true
+
+        // VERIFY: "chat.permissions.default". Set it to the Manual
+        // permission level. Check the exact value in the Settings UI
+        // before adding it.
+      }
+    }
+  }
+}
